@@ -7,10 +7,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/import-csv', [MailchimpController::class, 'importContacts'])->name('import.csv.form');
+//Returns blade to upload file
+Route::get('/upload-file', [MailchimpController::class, 'uploadFile']);
 
-Route::get('/update-csv', [MailchimpController::class, 'updateContacts'])->name('import.csv.form');
+//Import csv in mailchimp
+Route::post('/import-csv', [MailchimpController::class, 'importContacts'])->name('csv.import');
 
-Route::get('/update-tags-csv', [MailchimpController::class, 'updateContactsWithDifferentTags'])->name('import.csv.form');
+//Update imported csv with new fields
+Route::post('/update-csv', [MailchimpController::class, 'updateContacts'])->name('csv.update');
 
-Route::get('/download-csv', [MailchimpController::class, 'downloadContacts'])->name('import.csv.form');
+//Update imported existing csv with new data
+Route::post('/update-tags-csv', [MailchimpController::class, 'updateContactsWithDifferentTags'])->name('csv.update.tags');
+
+//Download csv file
+Route::post('/download-csv', [MailchimpController::class, 'downloadContacts'])->name('csv.download');
